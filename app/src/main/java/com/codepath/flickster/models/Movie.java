@@ -29,9 +29,18 @@ public class Movie {
     }
 
     public Movie(JSONObject jsonObject) throws JSONException {
-        this.posterPath = jsonObject.getString("poster_path");
-        this.originalTitle = jsonObject.getString("original_title");
-        this.overview = jsonObject.getString("overview");
+        if (jsonObject.optString("poster_path") != null) {
+            this.posterPath = jsonObject.getString("poster_path");
+        }
+
+        if (jsonObject.optString("original_title") != null) {
+            this.originalTitle = jsonObject.getString("original_title");
+        }
+
+        if (jsonObject.optString("overview") != null) {
+            this.overview = jsonObject.getString("overview");
+        }
+
     }
 
     public static ArrayList<Movie> fromJSONArray(JSONArray array) {

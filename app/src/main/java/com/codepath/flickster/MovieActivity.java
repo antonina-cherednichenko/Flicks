@@ -42,10 +42,12 @@ public class MovieActivity extends AppCompatActivity {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 try {
-                    JSONArray movieJsonResults = response.getJSONArray("results");
-                    movies.addAll(Movie.fromJSONArray(movieJsonResults));
-                    movieAdapter.notifyDataSetChanged();
-                    Log.d("DEBUG", movies.toString());
+                    if (response.optJSONArray("results") != null) {
+                        JSONArray movieJsonResults = response.getJSONArray("results");
+                        movies.addAll(Movie.fromJSONArray(movieJsonResults));
+                        movieAdapter.notifyDataSetChanged();
+                        Log.d("DEBUG", movies.toString());
+                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
