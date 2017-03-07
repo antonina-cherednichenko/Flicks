@@ -10,8 +10,9 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.codepath.flickster.MovieActivity">
 
-    <ListView
-        android:id="@+id/lvMovies"
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/movieList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
