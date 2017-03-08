@@ -26,50 +26,12 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
     private List<Movie> movies;
     private Context context;
 
+    private final static int POPULAR_MOVIE = 1;
+    private final static int NOT_SO_POPULAR_MOVIE = 0;
+
     public MovieAdapter(Context context, List<Movie> movies) {
         this.context = context;
         this.movies = movies;
-    }
-
-    @Override
-    public MovieViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.
-                from(parent.getContext()).
-                inflate(R.layout.item_movie, parent, false);
-
-        final MovieViewHolder holder = new MovieViewHolder(view);
-        return holder;
-    }
-
-    @Override
-    public void onBindViewHolder(MovieViewHolder holder, int position) {
-        Movie movie = movies.get(position);
-        holder.title.setText(movie.getOriginalTitle());
-        holder.overview.setText(movie.getOverview());
-
-        //Measure parent width
-        int displayWidth = context.getResources().getDisplayMetrics().widthPixels;
-
-//        Picasso.with(context).
-//                load(movie.getPosterPath()).fit().centerInside().placeholder(R.drawable.placeholder).transform(new RoundedCornersTransformation(5, 5))
-//                .into(holder.postImage);
-
-        String imagePath = "";
-        double imageSizeRatio = 1;
-        int orientation = context.getResources().getConfiguration().orientation;
-        if (orientation == Configuration.ORIENTATION_PORTRAIT) {
-            imagePath = movie.getPosterPath();
-            imageSizeRatio = 1.8;
-        } else if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            imagePath = movie.getBackdropPath();
-            imageSizeRatio = 1.6;
-        }
-
-        Picasso.with(context).
-                load(imagePath).resize((int) (displayWidth / imageSizeRatio), 0).placeholder(R.drawable.placeholder)
-                .transform(new RoundedCornersTransformation(6, 6))
-                .into(holder.postImage);
-
     }
 
     @Override
@@ -77,17 +39,86 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         return movies.size();
     }
 
+    @Override
+    public int getItemViewType(int position) {
+        Movie movie = movies.get(position);
+        return movie.getVoteAverage() > 5 ? POPULAR_MOVIE : NOT_SO_POPULAR_MOVIE;
+    }
+
+    @Override
+    public MovieViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        if (viewType == NOT_SO_POPULAR_MOVIE) {
+            View view = LayoutInflater.
+                    from(parent.getContext()).
+                    inflate(R.layout.not_so_popular_item_movie, parent, false);
+            return new NotSoPopularMovieViewHolder(view);
+        } else {
+            View view = LayoutInflater.
+                    from(parent.getContext()).
+                    inflate(R.layout.popular_item_movie, parent, false);
+            return new PopularMovieViewHolder(view);
+
+        }
+    }
+
+    @Override
+    public void onBindViewHolder(MovieViewHolder holder, int position) {
+        Movie movie = movies.get(position);
+
+        //Measure parent width
+        int displayWidth = context.getResources().getDisplayMetrics().widthPixels;
+
+        if (holder.getItemViewType() == NOT_SO_POPULAR_MOVIE) {
+            NotSoPopularMovieViewHolder movieHolder = (NotSoPopularMovieViewHolder) holder;
+
+            movieHolder.title.setText(movie.getOriginalTitle());
+            movieHolder.overview.setText(movie.getOverview());
+
+            // get display orientation
+            int orientation = context.getResources().getConfiguration().orientation;
+            String imagePath = (orientation == Configuration.ORIENTATION_PORTRAIT) ? movie.getPosterPath() : movie.getBackdropPath();
+            double imageSizeRatio = (orientation == Configuration.ORIENTATION_PORTRAIT) ? 1.8 : 1.6;
+
+            Picasso.with(context).
+                    load(imagePath).resize((int) (displayWidth / imageSizeRatio), 0).placeholder(R.drawable.placeholder)
+                    .transform(new RoundedCornersTransformation(6, 6))
+                    .into(movieHolder.image);
+        } else if (holder.getItemViewType() == POPULAR_MOVIE) {
+            PopularMovieViewHolder movieHolder = (PopularMovieViewHolder) holder;
+            Picasso.with(context).
+                    load(movie.getBackdropPath()).resize(displayWidth, 0).placeholder(R.drawable.placeholder)
+                    .transform(new RoundedCornersTransformation(6, 6))
+                    .into(movieHolder.image);
+        }
+    }
+
 
     public class MovieViewHolder extends RecyclerView.ViewHolder {
-        public ImageView postImage;
-        public TextView title;
-        public TextView overview;
 
         public MovieViewHolder(View v) {
             super(v);
-            postImage = (ImageView) v.findViewById(R.id.ivMovieImage);
+        }
+    }
+
+    public class NotSoPopularMovieViewHolder extends MovieViewHolder {
+        public ImageView image;
+        public TextView title;
+        public TextView overview;
+
+        public NotSoPopularMovieViewHolder(View v) {
+            super(v);
+            image = (ImageView) v.findViewById(R.id.ivMovieImage);
             title = (TextView) v.findViewById(R.id.tvTitle);
             overview = (TextView) v.findViewById(R.id.tvOverview);
+        }
+    }
+
+    public class PopularMovieViewHolder extends MovieViewHolder {
+        public ImageView image;
+
+        public PopularMovieViewHolder(View v) {
+            super(v);
+            image = (ImageView) v.findViewById(R.id.ivMovieImage);
         }
     }
 }

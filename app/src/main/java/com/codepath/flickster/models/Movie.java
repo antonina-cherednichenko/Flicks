@@ -16,10 +16,11 @@ public class Movie {
     private String backdropPath;
     private String originalTitle;
     private String overview;
+    private double voteAverage;
 
 
     public String getBackdropPath() {
-        return String.format("https://image.tmdb.org/t/p/w780/%s", backdropPath);
+        return String.format("https://image.tmdb.org/t/p/w1280/%s", backdropPath);
     }
 
     public String getOverview() {
@@ -32,6 +33,10 @@ public class Movie {
 
     public String getPosterPath() {
         return String.format("https://image.tmdb.org/t/p/w500/%s", posterPath);
+    }
+
+    public double getVoteAverage() {
+        return voteAverage;
     }
 
     public Movie(JSONObject jsonObject) throws JSONException {
@@ -49,6 +54,10 @@ public class Movie {
 
         if (jsonObject.optString("overview") != null) {
             this.overview = jsonObject.getString("overview");
+        }
+
+        if (jsonObject.optString("vote_average") != null) {
+            this.voteAverage = jsonObject.getDouble("vote_average");
         }
 
     }
