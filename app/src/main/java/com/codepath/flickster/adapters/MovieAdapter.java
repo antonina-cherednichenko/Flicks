@@ -14,6 +14,8 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
+
 /**
  * Created by tonya on 3/7/17.
  */
@@ -44,7 +46,8 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         holder.title.setText(movie.getOriginalTitle());
         holder.overview.setText(movie.getOverview());
 
-        Picasso.with(context).load(movie.getPosterPath()).into(holder.postImage);
+        Picasso.with(context).
+                load(movie.getPosterPath()).transform(new RoundedCornersTransformation(5, 5)).into(holder.postImage);
     }
 
     @Override
