@@ -46,9 +46,18 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         holder.title.setText(movie.getOriginalTitle());
         holder.overview.setText(movie.getOverview());
 
+        //Measure parent width
+        int displayWidth = context.getResources().getDisplayMetrics().widthPixels;
+
+//        Picasso.with(context).
+//                load(movie.getPosterPath()).fit().centerInside().placeholder(R.drawable.placeholder).transform(new RoundedCornersTransformation(5, 5))
+//                .into(holder.postImage);
+
         Picasso.with(context).
-                load(movie.getPosterPath()).transform(new RoundedCornersTransformation(5, 5))
-                .placeholder(R.drawable.placeholder).into(holder.postImage);
+                load(movie.getPosterPath()).resize(displayWidth / 3, 0).placeholder(R.drawable.placeholder)
+                .transform(new RoundedCornersTransformation(5, 5))
+                .into(holder.postImage);
+
     }
 
     @Override
