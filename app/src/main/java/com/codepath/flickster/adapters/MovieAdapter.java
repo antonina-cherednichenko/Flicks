@@ -47,7 +47,8 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         holder.overview.setText(movie.getOverview());
 
         Picasso.with(context).
-                load(movie.getPosterPath()).transform(new RoundedCornersTransformation(5, 5)).into(holder.postImage);
+                load(movie.getPosterPath()).transform(new RoundedCornersTransformation(5, 5))
+                .placeholder(R.drawable.placeholder).into(holder.postImage);
     }
 
     @Override
