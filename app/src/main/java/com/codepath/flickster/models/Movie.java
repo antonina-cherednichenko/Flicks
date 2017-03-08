@@ -12,6 +12,7 @@ import java.util.ArrayList;
 
 public class Movie {
 
+    private String id;
     private String posterPath;
     private String backdropPath;
     private String originalTitle;
@@ -33,6 +34,10 @@ public class Movie {
 
     public String getPosterPath() {
         return String.format("https://image.tmdb.org/t/p/w500/%s", posterPath);
+    }
+
+    public String getId() {
+        return id;
     }
 
     public double getVoteAverage() {
@@ -58,6 +63,10 @@ public class Movie {
 
         if (jsonObject.optString("vote_average") != null) {
             this.voteAverage = jsonObject.getDouble("vote_average");
+        }
+
+        if (jsonObject.optString("id") != null) {
+            this.id = jsonObject.getString("id");
         }
 
     }

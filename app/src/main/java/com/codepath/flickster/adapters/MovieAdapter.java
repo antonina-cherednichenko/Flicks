@@ -1,6 +1,7 @@
 package com.codepath.flickster.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.codepath.flickster.PlayYoutubeActivity;
 import com.codepath.flickster.R;
 import com.codepath.flickster.models.Movie;
 import com.squareup.picasso.Picasso;
@@ -119,6 +121,19 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         public PopularMovieViewHolder(View v) {
             super(v);
             image = (ImageView) v.findViewById(R.id.ivMovieImage);
+
+            v.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition(); // gets item position
+                    if (position != RecyclerView.NO_POSITION) {
+                        Intent intent = new Intent(context, PlayYoutubeActivity.class);
+                        intent.putExtra("movieId", movies.get(position).getBackdropPath());
+                        context.startActivity(intent);
+                    }
+                }
+            });
         }
     }
 }
