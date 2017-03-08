@@ -1,6 +1,7 @@
 package com.codepath.flickster.adapters;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -53,9 +54,20 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
 //                load(movie.getPosterPath()).fit().centerInside().placeholder(R.drawable.placeholder).transform(new RoundedCornersTransformation(5, 5))
 //                .into(holder.postImage);
 
+        String imagePath = "";
+        double imageSizeRatio = 1;
+        int orientation = context.getResources().getConfiguration().orientation;
+        if (orientation == Configuration.ORIENTATION_PORTRAIT) {
+            imagePath = movie.getPosterPath();
+            imageSizeRatio = 1.8;
+        } else if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            imagePath = movie.getBackdropPath();
+            imageSizeRatio = 1.6;
+        }
+
         Picasso.with(context).
-                load(movie.getPosterPath()).resize(displayWidth / 3, 0).placeholder(R.drawable.placeholder)
-                .transform(new RoundedCornersTransformation(5, 5))
+                load(imagePath).resize((int) (displayWidth / imageSizeRatio), 0).placeholder(R.drawable.placeholder)
+                .transform(new RoundedCornersTransformation(6, 6))
                 .into(holder.postImage);
 
     }
