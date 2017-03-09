@@ -129,7 +129,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
                     int position = getAdapterPosition(); // gets item position
                     if (position != RecyclerView.NO_POSITION) {
                         Intent intent = new Intent(context, PlayYoutubeActivity.class);
-                        intent.putExtra("movieId", movies.get(position).getBackdropPath());
+                        intent.putExtra("movieId", movies.get(position).getId());
                         context.startActivity(intent);
                     }
                 }

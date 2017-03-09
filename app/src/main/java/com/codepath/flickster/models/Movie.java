@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 public class Movie {
 
-    private String id;
+    private int id;
     private String posterPath;
     private String backdropPath;
     private String originalTitle;
@@ -36,7 +36,7 @@ public class Movie {
         return String.format("https://image.tmdb.org/t/p/w500/%s", posterPath);
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
@@ -65,9 +65,8 @@ public class Movie {
             this.voteAverage = jsonObject.getDouble("vote_average");
         }
 
-        if (jsonObject.optString("id") != null) {
-            this.id = jsonObject.getString("id");
-        }
+
+        this.id = jsonObject.optInt("id");
 
     }
 
@@ -82,5 +81,19 @@ public class Movie {
             }
         }
         return results;
+    }
+
+    public static String videoSourceFromJSONArray(JSONArray array) {
+        try {
+            JSONObject jsonObject = array.getJSONObject(0);
+
+            if (jsonObject.optString("key") != null) {
+                return jsonObject.getString("key");
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return "";
     }
 }
