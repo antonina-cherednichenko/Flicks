@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.codepath.flickster.MovieDetailActivity;
 import com.codepath.flickster.PlayYoutubeActivity;
 import com.codepath.flickster.R;
 import com.codepath.flickster.models.Movie;
@@ -112,6 +113,19 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
             image = (ImageView) v.findViewById(R.id.ivMovieImage);
             title = (TextView) v.findViewById(R.id.tvTitle);
             overview = (TextView) v.findViewById(R.id.tvOverview);
+
+            v.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition(); // gets item position
+                    if (position != RecyclerView.NO_POSITION) {
+                        Intent intent = new Intent(context, MovieDetailActivity.class);
+                        intent.putExtra("movie", movies.get(position));
+                        context.startActivity(intent);
+                    }
+                }
+            });
         }
     }
 
