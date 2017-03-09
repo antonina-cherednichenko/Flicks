@@ -8,14 +8,18 @@ import com.google.android.youtube.player.YouTubeBaseActivity;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerView;
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import cz.msebera.android.httpclient.Header;
+import java.io.IOException;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 /**
  * Created by tonya on 3/8/17.
@@ -43,33 +47,43 @@ public class PlayYoutubeActivity extends YouTubeBaseActivity {
                         String url = String.format(" https://api.themoviedb.org/3/movie/%d/videos?api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed",
                                 getIntent().getIntExtra("movieId", 0));
 
-                        AsyncHttpClient client = new AsyncHttpClient();
+                        OkHttpClient client = new OkHttpClient();
+                        Request request = new Request.Builder()
+                                .url(url)
+                                .build();
 
-                        client.get(url, new JsonHttpResponseHandler() {
+                        // Get a handler that can be used to post to the main thread
+                        client.newCall(request).enqueue(new Callback() {
                             @Override
-                            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                            public void onFailure(Call call, IOException e) {
+                                e.printStackTrace();
+                            }
+
+                            @Override
+                            public void onResponse(Call call, final Response response) throws IOException {
+                                if (!response.isSuccessful()) {
+                                    throw new IOException("Unexpected code " + response);
+                                }
+
+                                String responseData = response.body().string();
                                 try {
-                                    if (response.optJSONArray("results") != null) {
-                                        JSONArray movieJsonResults = response.getJSONArray("results");
-
-                                        youTubePlayer.setFullscreen(true);
-                                        youTubePlayer.loadVideo(Movie.videoSourceFromJSONArray(movieJsonResults));
-
-                                        // youTubePlayer.loadVideo("5xVh-7ywKpE");
+                                    JSONObject json = new JSONObject(responseData);
+                                    if (json.optJSONArray("results") != null) {
+                                        final JSONArray movieJsonResults = json.getJSONArray("results");
+                                        PlayYoutubeActivity.this.runOnUiThread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                //Handle UI here
+                                                youTubePlayer.setFullscreen(true);
+                                                youTubePlayer.loadVideo(Movie.videoSourceFromJSONArray(movieJsonResults));
+                                            }
+                                        });
                                     }
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
-
-                            }
-
-                            @Override
-                            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                                super.onFailure(statusCode, headers, responseString, throwable);
                             }
                         });
-
-
                     }
 
                     @Override
