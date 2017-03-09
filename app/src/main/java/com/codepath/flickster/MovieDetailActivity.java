@@ -13,15 +13,24 @@ import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
 
 public class MovieDetailActivity extends AppCompatActivity {
 
-    @BindView(R.id.movieImage) ImageView image;
-    @BindView(R.id.movieName) TextView name;
-    @BindView(R.id.movieRating) RatingBar rating;
-    @BindView(R.id.movieDescription)TextView description;
-    @BindView(R.id.releaseDate) TextView releaseDate;
+    @BindView(R.id.movieImage)
+    ImageView image;
+    @BindView(R.id.movieName)
+    TextView name;
+    @BindView(R.id.movieRating)
+    RatingBar rating;
+    @BindView(R.id.movieDescription)
+    TextView description;
+    @BindView(R.id.releaseDate)
+    TextView releaseDate;
+
+    private Movie movie;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +38,7 @@ public class MovieDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_movie_detail);
         ButterKnife.bind(this);
 
-        final Movie movie = (Movie) getIntent().getExtras().getSerializable("movie");
+        movie = (Movie) getIntent().getExtras().getSerializable("movie");
 
         //set description attributes
         Picasso.with(this).
@@ -43,15 +52,13 @@ public class MovieDetailActivity extends AppCompatActivity {
         description.setText(movie.getOverview());
         releaseDate.setText(String.format("Release Date: %s", movie.getReleaseDate()));
 
-        image.setOnClickListener(new ImageView.OnClickListener() {
+    }
 
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MovieDetailActivity.this, PlayYoutubeActivity.class);
-                intent.putExtra("movieId", movie.getId());
-                startActivity(intent);
-            }
-        });
+    @OnClick(R.id.movieImage)
+    public void playYoutubeVideo(View v) {
+        Intent intent = new Intent(MovieDetailActivity.this, PlayYoutubeActivity.class);
+        intent.putExtra("movieId", movie.getId());
+        startActivity(intent);
 
     }
 }
