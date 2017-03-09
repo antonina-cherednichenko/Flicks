@@ -19,6 +19,7 @@ public class Movie implements Serializable {
     private String originalTitle;
     private String overview;
     private double voteAverage;
+    private String releaseDate;
 
 
     public String getBackdropPath() {
@@ -39,6 +40,10 @@ public class Movie implements Serializable {
 
     public int getId() {
         return id;
+    }
+
+    public String getReleaseDate() {
+        return releaseDate;
     }
 
     public double getVoteAverage() {
@@ -64,6 +69,10 @@ public class Movie implements Serializable {
 
         if (jsonObject.optString("vote_average") != null) {
             this.voteAverage = jsonObject.getDouble("vote_average");
+        }
+
+        if (jsonObject.optString("release_date") != null) {
+            this.releaseDate = jsonObject.getString("release_date");
         }
 
 

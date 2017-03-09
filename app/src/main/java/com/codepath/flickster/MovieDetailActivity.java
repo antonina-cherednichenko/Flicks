@@ -24,6 +24,7 @@ public class MovieDetailActivity extends AppCompatActivity {
         TextView name = (TextView) findViewById(R.id.movieName);
         RatingBar rating = (RatingBar) findViewById(R.id.movieRating);
         TextView description = (TextView) findViewById(R.id.movieDescription);
+        TextView releaseDate = (TextView) findViewById(R.id.releaseDate);
 
         //set description attributes
         Picasso.with(this).
@@ -35,6 +36,7 @@ public class MovieDetailActivity extends AppCompatActivity {
         name.setText(movie.getOriginalTitle());
         rating.setRating((float) movie.getVoteAverage() / 2);
         description.setText(movie.getOverview());
+        releaseDate.setText(String.format("Release Date: %s", movie.getReleaseDate()));
 
     }
 }
