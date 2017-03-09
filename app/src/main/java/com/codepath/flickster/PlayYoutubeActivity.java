@@ -16,6 +16,8 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
@@ -28,13 +30,13 @@ public class PlayYoutubeActivity extends YouTubeBaseActivity {
 
     public static final String YT_API_KEY = "AIzaSyC2_EXzzOVaOsoQMPi7-WDD4HlcVah-hrE";
 
+    @BindView(R.id.player) YouTubePlayerView youTubePlayerView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play_youtube);
-
-        YouTubePlayerView youTubePlayerView =
-                (YouTubePlayerView) findViewById(R.id.player);
+        ButterKnife.bind(this);
 
         youTubePlayerView.initialize(YT_API_KEY,
                 new YouTubePlayer.OnInitializedListener() {

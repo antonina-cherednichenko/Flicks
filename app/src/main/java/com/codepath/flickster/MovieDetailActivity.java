@@ -11,22 +11,25 @@ import android.widget.TextView;
 import com.codepath.flickster.models.Movie;
 import com.squareup.picasso.Picasso;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
 
 public class MovieDetailActivity extends AppCompatActivity {
+
+    @BindView(R.id.movieImage) ImageView image;
+    @BindView(R.id.movieName) TextView name;
+    @BindView(R.id.movieRating) RatingBar rating;
+    @BindView(R.id.movieDescription)TextView description;
+    @BindView(R.id.releaseDate) TextView releaseDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_detail);
+        ButterKnife.bind(this);
 
         final Movie movie = (Movie) getIntent().getExtras().getSerializable("movie");
-
-        ImageView image = (ImageView) findViewById(R.id.movieImage);
-        TextView name = (TextView) findViewById(R.id.movieName);
-        RatingBar rating = (RatingBar) findViewById(R.id.movieRating);
-        TextView description = (TextView) findViewById(R.id.movieDescription);
-        TextView releaseDate = (TextView) findViewById(R.id.releaseDate);
 
         //set description attributes
         Picasso.with(this).

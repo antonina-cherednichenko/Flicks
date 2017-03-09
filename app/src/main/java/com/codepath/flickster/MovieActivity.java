@@ -16,6 +16,8 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
@@ -24,14 +26,14 @@ public class MovieActivity extends AppCompatActivity {
 
     private ArrayList<Movie> movies;
     private MovieAdapter movieAdapter;
-    private RecyclerView movieList;
+    @BindView(R.id.movieList) RecyclerView movieList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie);
+        ButterKnife.bind(this);
 
-        movieList = (RecyclerView) findViewById(R.id.movieList);
         LinearLayoutManager llm = new LinearLayoutManager(this);
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         movieList.setLayoutManager(llm);

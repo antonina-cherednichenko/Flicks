@@ -18,6 +18,8 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
 
 /**
@@ -104,15 +106,13 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
     }
 
     public class NotSoPopularMovieViewHolder extends MovieViewHolder {
-        public ImageView image;
-        public TextView title;
-        public TextView overview;
+        @BindView(R.id.ivMovieImage) ImageView image;
+        @BindView(R.id.tvTitle) TextView title;
+        @BindView(R.id.tvOverview) TextView overview;
 
         public NotSoPopularMovieViewHolder(View v) {
             super(v);
-            image = (ImageView) v.findViewById(R.id.ivMovieImage);
-            title = (TextView) v.findViewById(R.id.tvTitle);
-            overview = (TextView) v.findViewById(R.id.tvOverview);
+            ButterKnife.bind(this, v);
 
             v.setOnClickListener(new View.OnClickListener() {
 
@@ -130,11 +130,11 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
     }
 
     public class PopularMovieViewHolder extends MovieViewHolder {
-        public ImageView image;
+        @BindView(R.id.ivMovieImage) ImageView image;
 
         public PopularMovieViewHolder(View v) {
             super(v);
-            image = (ImageView) v.findViewById(R.id.ivMovieImage);
+            ButterKnife.bind(this, v);
 
             v.setOnClickListener(new View.OnClickListener() {
 
