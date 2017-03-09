@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 
 import com.codepath.flickster.adapters.MovieAdapter;
 import com.codepath.flickster.models.Movie;
+import com.codepath.flickster.utils.OkHttpHelper;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -17,8 +18,6 @@ import java.util.ArrayList;
 
 import okhttp3.Call;
 import okhttp3.Callback;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
 import okhttp3.Response;
 
 public class MovieActivity extends AppCompatActivity {
@@ -45,13 +44,7 @@ public class MovieActivity extends AppCompatActivity {
         String url = "https://api.themoviedb.org/3/movie/now_playing?api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed";
 
         // should be a singleton
-        OkHttpClient client = new OkHttpClient();
-        Request request = new Request.Builder()
-                .url(url)
-                .build();
-
-        // Get a handler that can be used to post to the main thread
-        client.newCall(request).enqueue(new Callback() {
+        OkHttpHelper.httpCall(url, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
                 e.printStackTrace();

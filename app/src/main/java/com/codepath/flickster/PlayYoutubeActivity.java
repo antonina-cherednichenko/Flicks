@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import com.codepath.flickster.models.Movie;
+import com.codepath.flickster.utils.OkHttpHelper;
 import com.google.android.youtube.player.YouTubeBaseActivity;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
@@ -17,8 +18,6 @@ import java.io.IOException;
 
 import okhttp3.Call;
 import okhttp3.Callback;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
 import okhttp3.Response;
 
 /**
@@ -47,13 +46,7 @@ public class PlayYoutubeActivity extends YouTubeBaseActivity {
                         String url = String.format(" https://api.themoviedb.org/3/movie/%d/videos?api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed",
                                 getIntent().getIntExtra("movieId", 0));
 
-                        OkHttpClient client = new OkHttpClient();
-                        Request request = new Request.Builder()
-                                .url(url)
-                                .build();
-
-                        // Get a handler that can be used to post to the main thread
-                        client.newCall(request).enqueue(new Callback() {
+                        OkHttpHelper.httpCall(url, new Callback() {
                             @Override
                             public void onFailure(Call call, IOException e) {
                                 e.printStackTrace();
