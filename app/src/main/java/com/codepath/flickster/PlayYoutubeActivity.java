@@ -52,10 +52,9 @@ public class PlayYoutubeActivity extends YouTubeBaseActivity {
                                     if (response.optJSONArray("results") != null) {
                                         JSONArray movieJsonResults = response.getJSONArray("results");
 
-                                        // do any work here to cue video, play video, etc.
-                                        youTubePlayer.cueVideo(Movie.videoSourceFromJSONArray(movieJsonResults));
-                                        //youTubePlayer.setFullscreen(true);
-                                        // or to play immediately
+                                        youTubePlayer.setFullscreen(true);
+                                        youTubePlayer.loadVideo(Movie.videoSourceFromJSONArray(movieJsonResults));
+
                                         // youTubePlayer.loadVideo("5xVh-7ywKpE");
                                     }
                                 } catch (JSONException e) {
