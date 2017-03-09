@@ -1,7 +1,9 @@
 package com.codepath.flickster;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -18,7 +20,7 @@ public class MovieDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_detail);
 
-        Movie movie = (Movie) getIntent().getExtras().getSerializable("movie");
+        final Movie movie = (Movie) getIntent().getExtras().getSerializable("movie");
 
         ImageView image = (ImageView) findViewById(R.id.movieImage);
         TextView name = (TextView) findViewById(R.id.movieName);
@@ -37,6 +39,16 @@ public class MovieDetailActivity extends AppCompatActivity {
         rating.setRating((float) movie.getVoteAverage() / 2);
         description.setText(movie.getOverview());
         releaseDate.setText(String.format("Release Date: %s", movie.getReleaseDate()));
+
+        image.setOnClickListener(new ImageView.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MovieDetailActivity.this, PlayYoutubeActivity.class);
+                intent.putExtra("movieId", movie.getId());
+                startActivity(intent);
+            }
+        });
 
     }
 }
