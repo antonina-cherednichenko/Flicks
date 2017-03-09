@@ -33,7 +33,7 @@ public class MovieDetailActivity extends AppCompatActivity {
 
 
         name.setText(movie.getOriginalTitle());
-        rating.setNumStars((int) Math.ceil(movie.getVoteAverage() / 2));
+        rating.setRating((float) movie.getVoteAverage() / 2);
         description.setText(movie.getOverview());
 
     }

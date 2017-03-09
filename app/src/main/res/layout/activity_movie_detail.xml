@@ -55,8 +55,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/movieName"
+            android:isIndicator="true"
             android:numStars="5"
-            android:stepSize="1" />
+            android:stepSize="0.1" />
 
         <TextView
             android:id="@+id/movieDescription"
