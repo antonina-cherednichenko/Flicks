@@ -22,13 +22,13 @@
             tools:src="@mipmap/ic_launcher" />
 
         <ImageView
-            android:layout_width="100dp"
+            android:layout_width="@dimen/video_play_button"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:adjustViewBounds="true"
             android:elevation="10dp"
             android:scaleType="fitXY"
-            android:src="@drawable/youtube_start_icon" />
+            android:src="@drawable/play_button" />
 
     </RelativeLayout>
 
