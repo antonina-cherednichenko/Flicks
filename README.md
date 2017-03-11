@@ -17,7 +17,7 @@ The following **required** functionality is completed:
 The following **optional** features are implemented:
 
 * [X] Display a nice default [placeholder graphic](http://guides.codepath.com/android/Displaying-Images-with-the-Picasso-Library#configuring-picasso) for each image during loading.
-* [X] Improved the user interface through styling and coloring.
+* [X] Improved the user interface through styling and coloring - CardView, colors, RatingBar style improvements.
 
 The following **bonus** features are implemented:
 
