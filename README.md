@@ -43,6 +43,7 @@ Here's a walkthrough of implemented user stories:
 
 ## Notes
 
+1. I have question about how to properly resize picasso placeholder image
 Describe any challenges encountered while building the app.
 
 ## Open-source libraries used
