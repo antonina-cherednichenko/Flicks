@@ -26,7 +26,7 @@ The following **bonus** features are implemented:
 * [X] Allow video trailers to be played in full-screen using the YouTubePlayerView.
     * [X] Overlay a play icon for videos that can be played.
     * [X] More popular movies should start a separate activity that plays the video immediately.
-    * [C] Less popular videos rely on the detail page should show ratings and a YouTube preview.
+    * [X] Less popular videos rely on the detail page should show ratings and a YouTube preview.
 * [X] Apply the popular [Butterknife annotation library](http://guides.codepath.com/android/Reducing-View-Boilerplate-with-Butterknife) to reduce boilerplate code.
 * [X] Apply rounded corners for the poster or background images using [Picasso transformations](https://guides.codepath.com/android/Displaying-Images-with-the-Picasso-Library#other-transformations)
 * [X] Replaced android-async-http network client with the popular [OkHttp](http://guides.codepath.com/android/Using-OkHttp) networking libraries.
